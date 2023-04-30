@@ -24,10 +24,19 @@ class App extends React.Component {
                     age: 22,
                     isHappy: false,
                 },
+                {
+                    id: 3,
+                    firstname: 'Stiven',
+                    surname: 'King',
+                    bio: 'Stiven',
+                    age: 56,
+                    isHappy: true,
+                }
             ]
         }
         this.addUser = this.addUser.bind(this)
         this.deleteUser = this.deleteUser.bind(this)
+        this.editUser = this.editUser.bind(this)
     }
 
     render() {
@@ -35,7 +44,7 @@ class App extends React.Component {
             <div>
                 <Header title='Users list' />
                 <main>
-                    <Users users={this.state.users} onDelete={this.deleteUser} />
+                    <Users users={this.state.users} onEdit={this.editUser} onDelete={this.deleteUser} />
                 </main>
                 <aside>
                     <AddUser onAdd={this.addUser}/>
@@ -45,10 +54,18 @@ class App extends React.Component {
     }
 
     deleteUser(id) {
-        console.log(id)
-        console.log(this.state.users.filter((el) => el.id === id))
+        // console.log(id)
+        // console.log(this.state.users.filter((el) => el.id === id))
         this.setState({
             users: this.state.users.filter((el) => el.id !== id)
+        })
+    }
+
+    editUser(user) {
+        let allUsers = this.state.users
+        allUsers[user.id - 1] = user
+        this.setState({users: []}, () => {
+            this.setState({users: [...allUsers]})
         })
     }
 
